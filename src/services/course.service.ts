@@ -20,6 +20,10 @@ export class CourseService {
 
       return newCourse;
    }
+   
+/* 
+Buscando tanto pelo título ou pela descrição
+*/
 
    getMany(search?: string) {
       const filteredCourseList = courseDatabase.filter((course) =>

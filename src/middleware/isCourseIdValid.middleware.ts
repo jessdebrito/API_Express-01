@@ -3,8 +3,9 @@
 // etapas que se repetem
 
 import { NextFunction, Request, Response } from "express";
-import { courseDataBase } from "../database/database";
+
 import { AppError } from "../error/AppError";
+import { courseDatabase } from "../database/database";
 
 export class IsCourseIdValid{
     static execute(request: Request, response: Response, next: NextFunction){
