@@ -23,14 +23,27 @@ export class CourseService {
    
 /* 
 Buscando tanto pelo título ou pela descrição
+*/ /* 
+Se eu tiver o termo de busca, estarei retornando resultados
+que contenham a chave de buca ou no título ou na descrição
+do contrário estarei retornando todos os resultados
 */
 
    getMany(search?: string) {
-      const filteredCourseList = courseDatabase.filter((course) =>
+      /* const filteredCourseList = courseDatabase.filter((course) =>
          search ? course.title.toLowerCase().includes(search.toLowerCase()) : true
       );
 
-      return filteredCourseList;
+      return filteredCourseList; */
+
+      if(search) {
+
+
+      } else {
+
+      }
+
+
    }
 
    getOne(course: ICourse) {     
