@@ -1,6 +1,6 @@
 import { ICourse } from "../interfaces/course.interface";
 
-export const courseDataBase: ICourse[] = [];
+export const courseDatabase: ICourse[] = [];
 
 let id = 0;
 
