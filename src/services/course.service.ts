@@ -1,6 +1,9 @@
 import { courseDataBase, generateId } from "../database/database";
 import { ICourse, TCreateCourseData, TUpdateCourseData } from "../interfaces/course.interface";
 
+
+// Etapa final
+
 export class CourseService {
     create(data: TCreateCourseData){
         const now = new Date();
@@ -26,9 +29,6 @@ export class CourseService {
     getOne(id: number) {
         const course = courseDataBase.find(course => course.id === id);
 
-        if(!course){
-            throw new Error("Course not found.");
-        }
         return course;
     };
 
@@ -36,9 +36,6 @@ export class CourseService {
     update(id: number, data: TUpdateCourseData) {
         const currentCourse = courseDataBase.find(course => course.id === id);
 
-        if(!currentCourse){
-            throw new Error("Course not found.");
-        }
 
         const now = new Date ();
 
@@ -54,10 +51,6 @@ export class CourseService {
 
     delete(id: number) {
         const index = courseDataBase.findIndex(course => course.id === id);
-
-        if(index == -1) {
-            throw new Error("Course not found.");
-        }
 
         courseDataBase.splice(index, 1);
 
