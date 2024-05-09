@@ -1,59 +1,55 @@
-import { courseDataBase, generateId } from "../database/database";
-import { ICourse, TCreateCourseData, TUpdateCourseData } from "../interfaces/course.interface";
-
+import { courseDatabase, generateId } from "../database/database";
+import {
+   ICourse,
+   TCreateCourseData,
+   TUpdateCourseData,
+} from "../interfaces/course.interface";
 
 // Etapa final
-
 export class CourseService {
-    create(data: TCreateCourseData){
-        const now = new Date();
+   create(data: TCreateCourseData) {
+      const now = new Date();
 
-        const newCourse: ICourse = {
-            id: generateId(),
-            ...data,
-            createdAt: now
-        };
+      const newCourse: ICourse = {
+         id: generateId(),
+         ...data,
+         createdAt: now,
+      };
 
-        courseDataBase.push(newCourse);
+      courseDatabase.push(newCourse);
 
-        return newCourse;
-    }
+      return newCourse;
+   }
 
-    getMany(search?: string){
-        const filteredCourseList = courseDataBase.filter((course) => search ? course.title.toLocaleLowerCase().includes(search.toLocaleLowerCase()) : true
-    );
-    return filteredCourseList;
-    };
+   getMany(search?: string) {
+      const filteredCourseList = courseDatabase.filter((course) =>
+         search ? course.title.toLowerCase().includes(search.toLowerCase()) : true
+      );
 
+      return filteredCourseList;
+   }
 
-    getOne(id: number) {
-        const course = courseDataBase.find(course => course.id === id);
+   getOne(course: ICourse) {     
+      return course;
+   }
 
-        return course;
-    };
+   update(currentCourse: ICourse, data: TUpdateCourseData) {  
+      const now = new Date();
 
+      const updateCourse: ICourse = { ...currentCourse, ...data, updatedAt: now };
 
-    update(id: number, data: TUpdateCourseData) {
-        const currentCourse = courseDataBase.find(course => course.id === id);
+      const index = courseDatabase.findIndex((course) => course.id === currentCourse.id);
 
+      courseDatabase.splice(index, 1, updateCourse);
 
-        const now = new Date ();
+      return updateCourse;
+   }
 
-        const updateCourse: ICourse = { ...currentCourse, ...data, updatedAt: now };
+   delete(id: number) {
+      const index = courseDatabase.findIndex((course) => course.id === id);
 
-        const index = courseDataBase.findIndex(course => course.id === id);
+      courseDatabase.splice(index, 1);
 
-        courseDataBase.splice(index, 1, updateCourse);
-
-        return updateCourse;
-    };
-
-
-    delete(id: number) {
-        const index = courseDataBase.findIndex(course => course.id === id);
-
-        courseDataBase.splice(index, 1);
-
-        return { message: "Course successfully deleted."}
-    }
+      return { message: "Course successfully deleted."};
+   }
 }

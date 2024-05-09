@@ -4,17 +4,19 @@
 
 import { NextFunction, Request, Response } from "express";
 import { courseDataBase } from "../database/database";
+import { AppError } from "../error/AppError";
 
 export class IsCourseIdValid{
-    //static - metodo que nao precisa de isntancia para ser executado
     static execute(request: Request, response: Response, next: NextFunction){
-        // Executar uma logica
-        const isCourseIdValid = courseDataBase.some(course => course.id === Number(request.params.id))
+        //Executar uma lógica
+        const existingCourse = courseDatabase.find(course => course.id === Number(request.params.id));
 
-        if(!isCourseIdValid){
-            return response.status(404).json({ message: "Course not found."})
+        if(!existingCourse){
+            throw new AppError("Course not found.", 404);
         }
 
-        next(); // Prosseguir para a proxima etapa
+        response.locals.course = existingCourse;
+
+        next(); //Prosseguir para próxima etapa
     }
 }
