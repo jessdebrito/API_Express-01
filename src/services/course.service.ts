@@ -41,26 +41,35 @@ export class CourseService {
       3
       11 - 15
 
+      Item primeiro (Página x Quantidade de itens) - 5
       Item Final = Página x Qualidade de Itens
 
    -> quantidade de páginas disponíveis
 
 */
 
-   getMany(search?: string) {
+   getMany(search?: string, page=1) {
       /* const filteredCourseList = courseDatabase.filter((course) =>
          search ? course.title.toLowerCase().includes(search.toLowerCase()) : true
       );
 
       return filteredCourseList; */
 
+      const firstItem = (page * 5) -5;
+      const lastItem = page*5;
+      const pageCount =  Math.ceil(courseDatabase.length / 5);
+
       if(search) {
          const filteredCourseList = courseDatabase.filter(course =>
              course.title.toLowerCase().includes(search) || 
              course.description.toLowerCase().includes(search.toLowerCase())
          );
+         
+         return  { pageCount, courses: filteredCourseList.slice(firstItem, lastItem) };
+        
+
          } else {
-            return courseDatabase;
+            return { pageCount, courses: courseDatabase.slice(firstItem, lastItem) };
       }
 
    }

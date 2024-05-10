@@ -2,45 +2,50 @@ import { Request, Response } from "express";
 import { CourseService } from "../services/course.service";
 
 export class CourseController {
-   create(request: Request, response: Response) {
-      const courseService = new CourseService();
+  create(request: Request, response: Response) {
+    const courseService = new CourseService();
 
-      const course = courseService.create(request.body);
+    const course = courseService.create(request.body);
 
-      return response.status(201).json(course);
-   }
+    return response.status(201).json(course);
+  }
 
-   getMany(request: Request, response: Response) {
-      const courseService = new CourseService();
+  getMany(request: Request, response: Response) {
+    const courseService = new CourseService();
 
-      const courses = courseService.getMany(request.query.search as string);
+    const page = request.query.page;
 
-      return response.status(200).json(courses);
-   }
+    const courses = courseService.getMany(
+      request.query.search as string,
+      page ? Number(page) : undefined
+    );
 
-   getOne(request: Request, response: Response) {
-      const courseService = new CourseService();
-      const existingCourse = response.locals.course;
+    return response.status(200).json(courses);
+  }
 
-      const course = courseService.getOne(existingCourse);
+  getOne(request: Request, response: Response) {
+    const courseService = new CourseService();
+    const existingCourse = response.locals.course;
 
-      return response.status(200).json(course);
-   }
+    const course = courseService.getOne(existingCourse);
 
-   update(request: Request, response: Response) {
-      const courseService = new CourseService();
-      const existingCourse = response.locals.course;
+    return response.status(200).json(course);
+  }
 
-      const course = courseService.update(existingCourse, request.body);
+  update(request: Request, response: Response) {
+    const courseService = new CourseService();
+    const existingCourse = response.locals.course;
 
-      return response.status(200).json(course);
-   }
+    const course = courseService.update(existingCourse, request.body);
 
-   remove(request: Request, response: Response) {
-      const courseService = new CourseService();
+    return response.status(200).json(course);
+  }
 
-      const message = courseService.delete(Number(request.params.id));
+  remove(request: Request, response: Response) {
+    const courseService = new CourseService();
 
-      return response.status(200).json(message);
-   }
+    const message = courseService.delete(Number(request.params.id));
+
+    return response.status(200).json(message);
+  }
 }
