@@ -22,11 +22,29 @@ export class CourseService {
    }
    
 /* 
-Buscando tanto pelo título ou pela descrição
+   Buscando tanto pelo título ou pela descrição 
 */ /* 
-Se eu tiver o termo de busca, estarei retornando resultados
-que contenham a chave de buca ou no título ou na descrição
-do contrário estarei retornando todos os resultados
+   Se eu tiver o termo de busca, estarei retornando resultados
+   que contenham a chave de buca ou no título ou na descrição
+   do contrário estarei retornando todos os resultados
+*/
+
+/* 
+   -> 5 cursos pro página
+
+      1
+      1 - 5
+
+      2
+      6 - 10
+
+      3
+      11 - 15
+
+      Item Final = Página x Qualidade de Itens
+
+   -> quantidade de páginas disponíveis
+
 */
 
    getMany(search?: string) {
@@ -37,12 +55,13 @@ do contrário estarei retornando todos os resultados
       return filteredCourseList; */
 
       if(search) {
-
-
-      } else {
-
+         const filteredCourseList = courseDatabase.filter(course =>
+             course.title.toLowerCase().includes(search) || 
+             course.description.toLowerCase().includes(search.toLowerCase())
+         );
+         } else {
+            return courseDatabase;
       }
-
 
    }
 
